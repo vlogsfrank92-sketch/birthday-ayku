@@ -2,38 +2,146 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>С днём рождения!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Айку.exe — Happy Birthday!</title>
   <style>
     body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at top, #141e30, #243b55);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #6dd5fa, #2980b9);
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      flex-direction: column;
     }
+
     h1 {
       font-size: 3em;
-      margin-bottom: 0.2em;
+      color: #00eaff;
+      text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff;
+      animation: glow 2s infinite alternate;
     }
-    p {
-      font-size: 1.2em;
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00eaff; }
+      to { text-shadow: 0 0 30px #00ffff, 0 0 60px #00eaff; }
     }
-    .signature {
-      margin-top: 1em;
-      font-size: 0.9em;
-      opacity: 0.8;
+
+    #text {
+      margin-top: 20px;
+      width: 80%;
+      font-size: 1.3em;
+      color: #d3d3d3;
+      text-align: center;
+      white-space: pre-line;
+      border-right: 2px solid #00eaff;
+      overflow: hidden;
+      animation: typing 5s steps(40) 1s forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 80%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    button {
+      margin-top: 30px;
+      background: #00eaff;
+      color: #000;
+      border: none;
+      padding: 10px 25px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00ffff;
+      transform: scale(1.1);
+    }
+
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #00eaff;
+      border-radius: 50%;
+      animation: float 10s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div>
-    <h1>С днём рождения, Айку!</h1>
-    <p>🎉 Желаю тебе отличного настроения, ярких моментов и красивых кадров — ведь ты сама хотела быть готова 😉</p>
-    <p class="signature">От твоего айтишника ;) </p>
-  </div>
+
+  <div class="particles" id="particles"></div>
+
+  <h1>Happy Birthday, Айку 🎉</h1>
+  <div id="text"></div>
+  <button onclick="showMessage()">Нажми меня 👀</button>
+
+  <script>
+    const message = 
+`Система сообщает: праздник активирован ✅
+
+Айку, желаю тебе:
+• стабильных апдейтов в жизни 💫
+• без ошибок и багов 😄
+• вечной батарейки энергии 🔋
+• и бесконечного Wi-Fi счастья ❤️
+
+Твой айтишник передаёт привет с сервера добра.`;
+
+    function typeText(text, element) {
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(typing, 35);
+        }
+      }
+      typing();
+    }
+
+    function showMessage() {
+      const el = document.getElementById('text');
+      el.textContent = '';
+      typeText(message, el);
+    }
+
+    // создать "частицы" фона
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (5 + Math.random() * 10) + 's';
+      p.style.animationDelay = Math.random() * 5 + 's';
+      particlesContainer.appendChild(p);
+    }
+  </script>
 </body>
 </html>
